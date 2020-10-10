@@ -11,7 +11,7 @@
   "bugs": {
     "url": "https://github.com/hashicorp/next-mdx-remote/issues"
   },
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "lint": "prettier --write \"./**/*.{js,jsx,json}\"",
     "release:major": "release major && npm publish",
