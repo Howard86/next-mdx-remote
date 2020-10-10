@@ -1,16 +1,22 @@
-require('./idle-callback-polyfill')
-const React = require('react')
-const { mdx, MDXProvider } = require('@mdx-js/react')
-const { useEffect } = require('react')
+import './idle-callback-polyfill'
+import React, { useEffect, useState, createElement } from 'react'
+import { mdx, MDXProvider, MDXProviderProps } from '@mdx-js/react'
+import type { Scope } from './render-to-string'
 
-module.exports = function hydrate(
-  { compiledSource, renderedOutput, scope = {} },
-  { components } = {}
-) {
+type HydrateParam = {
+  compiledSource: string
+  renderedOutput: string
+  scope: Scope
+}
+
+export function hydrate(
+  { compiledSource, renderedOutput, scope = {} }: HydrateParam,
+  options: MDXProviderProps = { children: null, components: {} }
+): JSX.Element {
   // our default result is the server-rendered output
   // we get this in front of users as quickly as possible
-  const [result, setResult] = React.useState(
-    React.createElement('div', {
+  const [result, setResult] = useState<JSX.Element>(
+    createElement('div', {
       dangerouslySetInnerHTML: {
         __html: renderedOutput,
       },
@@ -18,7 +24,9 @@ module.exports = function hydrate(
   )
 
   // if we're server-side, we can return the raw output early
-  if (typeof window === 'undefined') return result
+  if (typeof window === 'undefined') {
+    return result
+  }
 
   // if we're on the client side, we hydrate the mdx content inside
   // requestIdleCallback, since we can be fairly confident that
@@ -31,7 +39,7 @@ module.exports = function hydrate(
     const handle = window.requestIdleCallback(() => {
       // first we set up the scope which has to include the mdx custom
       // create element function as well as any components we're using
-      const fullScope = { mdx, ...components, ...scope }
+      const fullScope = { mdx, ...options.components, ...scope }
       const keys = Object.keys(fullScope)
       const values = Object.values(fullScope)
 
@@ -49,9 +57,9 @@ module.exports = function hydrate(
 
       // wrapping the content with MDXProvider will allow us to customize the standard
       // markdown components (such as "h1" or "a") with the "components" object
-      const wrappedWithMdxProvider = React.createElement(
+      const wrappedWithMdxProvider = createElement(
         MDXProvider,
-        { components },
+        options,
         hydratedFn
       )
 
