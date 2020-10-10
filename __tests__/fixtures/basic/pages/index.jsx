@@ -1,8 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import renderToString from '../../../../render-to-string'
-import hydrate from '../../../../hydrate'
+import { renderToString, hydrate } from '../../../../lib'
 import Test from '../components/test'
 import { paragraphCustomAlerts } from '@hashicorp/remark-plugins'
 

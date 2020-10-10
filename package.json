@@ -61,7 +61,8 @@
   },
   "jest": {
     "testPathIgnorePatterns": [
-      "fixtures"
+      "fixtures",
+      "next.config.js"
     ],
     "verbose": true
   },
