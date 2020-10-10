@@ -33,7 +33,7 @@
     "gray-matter": "^4.0.2",
     "husky": "^4.2.5",
     "jest": "^26.4.0",
-    "next": "^9.5.2",
+    "next": "^9.5.5",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "puppeteer": "^5.2.1",
