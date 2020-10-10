@@ -27,7 +27,13 @@
     "@mdx-js/react": "^1.6.16"
   },
   "devDependencies": {
+    "@babel/traverse": "^7.11.5",
+    "@babel/types": "^7.11.5",
     "@hashicorp/remark-plugins": "^3.0.0",
+    "@types/babel__preset-env": "^7.9.1",
+    "@types/mdx-js__react": "^1.5.3",
+    "@types/react": "^16.9.51",
+    "@types/react-dom": "^16.9.8",
     "cross-spawn": "^7.0.3",
     "express": "^4.17.1",
     "gray-matter": "^4.0.2",
