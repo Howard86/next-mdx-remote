@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import mdx, { MdxOptions } from '@mdx-js/mdx'
 import { MDXProvider, mdx as mdxReact, MDXProviderProps } from '@mdx-js/react'
-import { transformAsync } from '@babel/core'
+import { transformAsync, TransformOptions } from '@babel/core'
 import presetEnv from '@babel/preset-env'
 import presetReact from '@babel/preset-react'
 import { renderToString as reactRenderToString } from 'react-dom/server'
@@ -33,19 +33,16 @@ export async function renderToString(
   // mdx gives us back es6 code, we then need to transform into two formats:
   // - first a version we can render to string right now as a "serialized" result
   // - next a version that is fully browser-compatible that we can eval to rehydrate
+  const baseOptions: TransformOptions = {
+    presets: [presetReact, presetEnv],
+    configFile: false,
+  }
   const [now, later] = await Promise.all([
     // this one is for immediate evaluation so we can renderToString below
-    transformAsync(code, {
-      presets: [presetReact, presetEnv],
-      configFile: false,
-    }),
+    transformAsync(code, baseOptions),
     // this one is for the browser to eval and rehydrate, later
     // evaluate the code
-    transformAsync(code, {
-      presets: [presetReact, presetEnv],
-      plugins: [BabelPluginMdxBrowser],
-      configFile: false,
-    }),
+    transformAsync(code, { ...baseOptions, plugins: [BabelPluginMdxBrowser] }),
   ])
 
   if (!now || !later || !later.code) {

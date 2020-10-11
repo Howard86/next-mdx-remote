@@ -1,21 +1,17 @@
 if (typeof window !== 'undefined') {
-  window.requestIdleCallback =
-    window.requestIdleCallback ||
-    function (cb) {
+  if (typeof window.requestIdleCallback === 'undefined') {
+    window.requestIdleCallback = (cb) => {
       var start = Date.now()
-      return setTimeout(function () {
+      return setTimeout(() => {
         cb({
           didTimeout: false,
-          timeRemaining: function () {
-            return Math.max(0, 50 - (Date.now() - start))
-          },
+          timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
         })
       }, 1)
     }
+  }
 
-  window.cancelIdleCallback =
-    window.cancelIdleCallback ||
-    function (id) {
-      clearTimeout(id)
-    }
+  if (typeof window.cancelIdleCallback === 'undefined') {
+    window.cancelIdleCallback = (id) => clearTimeout(id)
+  }
 }
