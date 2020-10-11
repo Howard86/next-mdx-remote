@@ -11,9 +11,12 @@
   "bugs": {
     "url": "https://github.com/hashicorp/next-mdx-remote/issues"
   },
-  "main": "src/index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "lint": "prettier --write \"./**/*.{js,jsx,json}\"",
+    "lint": "prettier --write \"./{src,examples}/**/*.{ts,js,jsx,json}\"",
+    "build": "tsc",
+    "type-check": "tsc --noEmit",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
     "release:patch": "release patch && npm publish",
@@ -56,7 +59,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "pretty-quick --staged",
+      "pre-push": "npm run type-check"
     }
   },
   "jest": {
