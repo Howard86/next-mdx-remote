@@ -4,12 +4,12 @@
     "target": "es2015",
     "declaration": true,
     "removeComments": true,
-    "declarationMap": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./lib",
     "typeRoots": ["node_modules/@types", "src/types"],
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
   },
   "exclude": ["node_modules", "__tests__", "examples"]
 }

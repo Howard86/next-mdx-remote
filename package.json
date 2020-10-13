@@ -15,7 +15,9 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "lint": "prettier --write \"./{src,examples}/**/*.{ts,js,jsx,json}\"",
-    "build": "tsc",
+    "build": "npm run clean && npm run build:ts",
+    "clean": "rm -rf ./lib",
+    "build:ts": "tsc",
     "type-check": "tsc --noEmit",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
