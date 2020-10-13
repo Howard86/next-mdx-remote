@@ -33,16 +33,20 @@ export async function renderToString(
   // mdx gives us back es6 code, we then need to transform into two formats:
   // - first a version we can render to string right now as a "serialized" result
   // - next a version that is fully browser-compatible that we can eval to rehydrate
-  const baseOptions: TransformOptions = {
-    presets: [presetReact, presetEnv],
-    configFile: false,
-  }
+
   const [now, later] = await Promise.all([
     // this one is for immediate evaluation so we can renderToString below
-    transformAsync(code, baseOptions),
+    transformAsync(code, {
+      presets: [presetReact, presetEnv],
+      configFile: false,
+    }),
     // this one is for the browser to eval and rehydrate, later
     // evaluate the code
-    transformAsync(code, { ...baseOptions, plugins: [BabelPluginMdxBrowser] }),
+    transformAsync(code, {
+      presets: [presetReact, presetEnv],
+      configFile: false,
+      plugins: [BabelPluginMdxBrowser],
+    }),
   ])
 
   if (!now || !later || !later.code) {

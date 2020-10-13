@@ -31,12 +31,14 @@ export function BabelPluginMdxBrowser() {
       // don't need it here as we are manually injecting dependencies
       VariableDeclaration(path: NodePath<CustomVariableDeclaration>) {
         // this removes the `makeShortcode` function
-        if (path.node.declarations[0].id.name === 'makeShortcode') {
+        if (path.node.declarations?.[0].id.name === 'makeShortcode') {
           path.remove()
         }
 
         // this removes any variable that is set using the `makeShortcode` function
-        if (path.node.declarations[0]?.init?.callee?.name === 'makeShortcode') {
+        if (
+          path.node.declarations?.[0]?.init?.callee?.name === 'makeShortcode'
+        ) {
           path.remove()
         }
       },
