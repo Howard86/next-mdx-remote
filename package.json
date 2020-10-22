@@ -1,9 +1,12 @@
 {
-  "name": "next-mdx-remote",
+  "name": "@howard86/next-mdx-remote",
   "description": "utilities for loading mdx from any remote source as data, rather than as a local import",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Jeff Escalante",
   "homepage": "https://github.com/hashicorp/next-mdx-remote#readme",
+  "files": [
+    "lib/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hashicorp/next-mdx-remote.git"
@@ -19,6 +22,9 @@
     "clean": "rm -rf ./lib",
     "build:ts": "tsc",
     "type-check": "tsc --noEmit",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
     "release:major": "release major && npm publish",
     "release:minor": "release minor && npm publish",
     "release:patch": "release patch && npm publish",
@@ -79,5 +85,9 @@
     "next.js"
   ],
   "sideEffects": false,
-  "license": "MPL-2.0"
+  "license": "MPL-2.0",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  }
 }
