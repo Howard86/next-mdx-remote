@@ -37,7 +37,7 @@ export function BabelPluginMdxBrowser() {
 
         // this removes any variable that is set using the `makeShortcode` function
         if (
-          path.node.declarations?.[0]?.init?.callee?.name === 'makeShortcode'
+          path.node?.declarations?.[0]?.init?.callee?.name === 'makeShortcode'
         ) {
           path.remove()
         }
